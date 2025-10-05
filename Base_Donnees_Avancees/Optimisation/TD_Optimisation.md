@@ -96,6 +96,19 @@ WHERE Et_Id NOT IN (
 
 ```
 
+#### Forme SQL (version pédagogique MINUS)
+
+```sql
+
+SELECT Et_Id, Et_Nom
+FROM ÉTUDIANT
+         MINUS
+SELECT Et_Id, Et_Nom
+FROM ÉTUDIANT
+         JOIN INSCRIPTION USING(Et_Id);
+
+```
+
 ### Forme algébrique linéaire
 
 π Et_Nom ( Etudiant ⨝ ( π_Et_Id(Etudiant) − π_Et_Id(Inscription) ) )
