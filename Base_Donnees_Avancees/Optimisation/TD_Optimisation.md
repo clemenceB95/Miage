@@ -96,7 +96,7 @@ WHERE Et_Id NOT IN (
 
 ```
 
-#### Forme SQL (version pédagogique MINUS)
+#### Forme SQL (version MINUS)
 
 ```sql
 
