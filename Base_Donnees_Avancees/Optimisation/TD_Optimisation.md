@@ -83,7 +83,7 @@ WHERE NOT EXISTS (
 );
 
 ```
-#### Forme SQL (version NOT IN)
+### Forme SQL (version NOT IN)
 
 ```sql
 
