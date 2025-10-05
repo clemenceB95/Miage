@@ -23,7 +23,7 @@ On considère le schéma relationnel suivant :
 
 ### Schéma Entité/Association (E/A)
 
-![Schéma E/A](Optimisation/Asset/Img/Rappel_Exercice1.png.jpg)
+![Schéma E/A](Asset/Img/Rappel_Exercice1.png.jpg)
 
 ### Description des entités et associations
 
@@ -41,7 +41,7 @@ On considère le schéma relationnel suivant :
 
 ## Modèle Logique de Données (MLD)
 
-![Schéma MLD](Optimisation/Asset/Img/Rappel_Exercice1_MLD.png)
+![Schéma MLD](Asset/Img/Rappel_Exercice1_MLD.png)
 
 ### Remarques
 
