@@ -4,7 +4,7 @@
 
 On considère le schéma relationnel suivant :
 
-**ETUDIANT**(Et_Id, Et_Nom, Et_Pren, Et_DateNais, Et_LieuNais)  
+**ÉTUDIANT**(Et_Id, Et_Nom, Et_Pren, Et_DateNais, Et_LieuNais)  
 **ENSEIGNANT**(En_Id, En_Nom, En_Pren, En_DateNais, En_LieuNais)  
 **UE**(UE_Id, UE_Libelle, UE_CM, UE_TD, UE_NbGrp, En_Id)  
 **ENS_TD**(UE_Id, En_Id, ETD_Grp)  
@@ -28,14 +28,14 @@ On considère le schéma relationnel suivant :
 ### Description des entités et associations
 
 1. **Entités** :
-    - **ETUDIANT** : Et_Id, Et_Nom, Et_Pren, Et_DateNais, Et_LieuNais
-    - **ENSEIGNANT** : En_Id, En_Nom, En_Pren, En_DateNais, En_LieuNais
+    - **ÉTUDIANT**: Et_Id, Et_Nom, Et_Pren, Et_DateNais, Et_LieuNais
+    - **ENSEIGNANT**: En_Id, En_Nom, En_Pren, En_DateNais, En_LieuNais
     - **UE** : UE_Id, UE_Libelle, UE_CM, UE_TD, UE_NbGrp, En_Id
 
 2. **Associations** :
-    - **INSCRIPTION** entre ETUDIANT et UE : relie un étudiant à l’UE où il est inscrit (attributs : I_Grp, I_NoteF)
+    - **INSCRIPTION** entre ÉTUDIANT et UE : relie un étudiant à l’UE où il est inscrit (attributs : I_Grp, I_NoteF)
     - **ENS_TD** entre ENSEIGNANT et UE : relie un enseignant à un groupe de TD (attribut : ETD_Grp)
-    - L’enseignant principal de l’UE est indiqué par l’attribut `En_Id` de **UE**.
+    - L’enseignant principal de l’UE est indiqué par l’attribut `En_Id` d'**UE**.
 
 ---
 
@@ -49,13 +49,31 @@ On considère le schéma relationnel suivant :
 - Les relations deviennent des tables avec leurs clés primaires et étrangères.
 - Chaque association avec attributs devient une table à part (ex. INSCRIPTION et ENS_TD).  
 
-# Rappel EXERCICE 2
+## Rappel Exercice 2
 
-## a. Étudiants qui ne suivent aucune UE
+### Contexte
 
-### Forme SQL
+Donnez la forme SQL et la forme algébrique des requêtes suivantes (sous forme linéaire et arborescente) :
+
+a. Quels sont les noms des étudiants qui ne suivent aucune UE ?  
+b. Quels sont les noms des enseignants qui enseignent la même matière en TD et en Cours ?
+
+### Symboles utilisés
+
+Pour les formes algébriques relationnelles, on utilise les symboles suivants :
+
+- π = projection
+- σ = sélection
+- ⨝ = jointure naturelle
+- ∪ = union
+- ∩ = intersection
+- − = différence
+
+
+### Forme SQL (Version NOT EXISTS)
 
 ```sql
+
 SELECT Et_Nom
 FROM ETUDIANT e
 WHERE NOT EXISTS (
@@ -64,3 +82,34 @@ WHERE NOT EXISTS (
     WHERE e.Et_Id = i.Et_Id
 );
 
+```
+#### Forme SQL (version NOT IN)
+
+```sql
+
+SELECT Et_Nom
+FROM ÉTUDIANT
+WHERE Et_Id NOT IN (
+    SELECT Et_Id
+    FROM INSCRIPTION
+);
+
+```
+
+### Forme algébrique linéaire
+
+π Et_Nom ( Etudiant ⨝ ( π_Et_Id(Etudiant) − π_Et_Id(Inscription) ) )
+
+### Forme algébrique arborescente
+
+#### a) Étudiants qui ne suivent aucune UE
+
+           π(EtNom)
+               │
+              ⨝
+           ┌───┴────────────┐
+           │                │
+        ÉTUDIANT          ( − )
+                       ┌────┴─────┐
+                    π(EtId)      π(EtId)
+                 (ÉTUDIANT)   (INSCRIPTION)
