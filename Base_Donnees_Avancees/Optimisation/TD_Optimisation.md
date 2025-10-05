@@ -96,16 +96,18 @@ WHERE Et_Id NOT IN (
 
 ```
 
-#### Forme SQL (version MINUS)
+### Requête SQL – Étudiants non inscrits (version avec `MINUS` dans `IN`)
 
 ```sql
-
 SELECT Et_Id, Et_Nom
-FROM ÉTUDIANT
-         MINUS
-SELECT Et_Id, Et_Nom
-FROM ÉTUDIANT
-         JOIN INSCRIPTION USING(Et_Id);
+FROM Etudiant
+WHERE Et_Id IN (
+    SELECT Et_Id
+    FROM Etudiant
+    MINUS
+    SELECT Et_Id
+    FROM Inscription
+);
 
 ```
 
