@@ -19,7 +19,7 @@ On considère le schéma relationnel suivant :
 
 ---
 
-## Exercice 1 : Représentation Entité/Association
+## Rappel Exercice 1 : Représentation Entité/Association
 
 ### Schéma Entité/Association (E/A)
 
@@ -49,4 +49,18 @@ On considère le schéma relationnel suivant :
 - Les relations deviennent des tables avec leurs clés primaires et étrangères.
 - Chaque association avec attributs devient une table à part (ex. INSCRIPTION et ENS_TD).  
 
+# Rappel EXERCICE 2
+
+## a. Étudiants qui ne suivent aucune UE
+
+### Forme SQL
+
+```sql
+SELECT Et_Nom
+FROM ETUDIANT e
+WHERE NOT EXISTS (
+    SELECT *
+    FROM INSCRIPTION i
+    WHERE e.Et_Id = i.Et_Id
+);
 
