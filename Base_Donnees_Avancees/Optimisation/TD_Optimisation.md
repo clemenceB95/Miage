@@ -110,6 +110,7 @@ WHERE Et_Id IN (
 );
 
 ```
+Les requêtes ont été testées sur la plateforme en ligne https://www.db-fiddle.com
 
 ### Forme algébrique linéaire
 
@@ -121,10 +122,78 @@ WHERE Et_Id IN (
 
            π(EtNom)
                │
-              ⨝
+               ⨝
            ┌───┴────────────┐
            │                │
         ÉTUDIANT          ( − )
                        ┌────┴─────┐
                     π(EtId)      π(EtId)
                  (ÉTUDIANT)   (INSCRIPTION)
+
+## Rappel Exercice 2
+
+b. Quels sont les noms des enseignants qui enseignent la même matière en TD et en Cours ?
+
+### Forme SQL
+
+### Requête SQL – Enseignants en TD et Cours (version avec jointure classique)
+```sql
+
+SELECT e.En_Nom
+FROM ENSEIGNANT e, ENS_TD E, UE u
+WHERE u.En_Id = e.En_Id
+  AND u.UE_Id = E.UE_Id
+  AND E.En_Id = e.En_Id;
+
+```
+
+### Requête SQL – Enseignants en TD et Cours (version avec table temporaire T et INTERSECT)
+```sql
+
+SELECT e.En_Nom
+FROM Enseignant e,
+(SELECT En_Id, UE_Id
+FROM ENS_TD
+INTERSECT
+SELECT En_Id, UE_Id
+FROM UE) T
+WHERE T.En_Id = e.En_Id;
+
+```
+
+> **Remarque :**  
+> Dans la deuxième requête, la sous-requête `(SELECT… INTERSECT ...) T` crée une table temporaire virtuelle T, contenant les enseignants ayant la même UE en TD et en cours.  
+> On relie ensuite T à la table ENSEIGNANT pour récupérer les noms (`En_Nom`).
+
+
+### Forme algébrique arborescente
+
+### Forme algébrique arborescente – Version avec intersection (∩)
+
+           π(En_Nom)
+               │
+               ⨝
+        ┌──────┴──────┐
+        │             │
+    ENSEIGNANT      ( ∩ )
+                  ┌───┴───┐
+                  UE    ENS_TD
+               (En_Id)   (En_Id)
+
+### Forme algébrique arborescente – Version avec les deux relations jointes (UE ⨝ ENS_TD)
+
+           π(En_Nom)
+               │
+               ⨝
+        ┌──────┴──────┐
+        │             ⨝
+    ENSEIGNANT   ┌────┴────┐
+                 UE      ENS_TD
+
+### Forme algébrique linéaire
+
+π En_Nom ( ENSEIGNANT ⨝ (UE ⨝ ENS_TD) )
+
+Avec intersection explicite :
+
+π En_Nom ( ENSEIGNANT ⨝ (UE ∩ ENS_TD) )
