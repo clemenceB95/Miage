@@ -197,3 +197,64 @@ WHERE T.En_Id = e.En_Id;
 Avec intersection explicite :
 
 π En_Nom ( ENSEIGNANT ⨝ (UE ∩ ENS_TD) )
+
+# Exercice 1
+
+Soit l’expression algébrique suivante :
+
+σ En_Id='E35' ( π UE_Id, UE_Libelle ( σ UE_NbGrp ≤ 1 ( UE ) ) )
+
+---
+
+### 1. Pourquoi cette expression ne fonctionne pas ?
+
+Cette expression ne fonctionne pas, car on fait une **restriction sur `En_Id`**
+alors que cet attribut **disparaît à cause de la projection** `π UE_Id, UE_Libelle`.  
+La sélection ne peut donc pas s'appliquer.
+
+---
+
+### Expression corrigée
+
+π UE_Id, UE_Libelle ( σ UE_NbGrp ≤ 1 ∧ En_Id='E35' ( UE ) )
+
+---
+
+### 2. Question correspondante
+
+Quels sont les **identifiants** et **libellés** des unités d’enseignement
+ayant un **nombre de groupes inférieur ou égal à un** et **enseignées par l’enseignant E35** ?
+
+---
+
+### 3. Forme arborescente
+
+
+            π UE_Libellé
+                  │
+                  ▼
+    σ (UE_NbGrp ≤ 1 ∧ En_Id = 'E35')
+                  │
+                  ▼
+                  UE
+
+### 4. Arbre optimisé (algèbre relationnelle)
+
+           π_{UE_Id, UE_Libelle}
+                   │
+        σ_{UE_NbGrp ≤ 1 ∧ En_Id = 'E35'}
+                   │
+     π_{UE_Id, UE_Libelle, UE_NbGrp, En_Id}
+                   │
+                  UE
+
+### 5. Interprétation SQL efficace
+
+```sql
+
+SELECT UE_Id, UE_Libelle
+FROM UE u
+WHERE u.UE_NbGrp <= 1
+  AND u.En_Id = 'E35';
+
+```
