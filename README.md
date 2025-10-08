@@ -6,7 +6,7 @@ Ce dossier contient les travaux réalisés dans le cadre du Master MIAGE.
 Il regroupe différents modules et TDs, incluant :
 
 - [Base de données avancée / Optimisation algébrique](./Base_Donnees_Avancees/Optimisation/TD_Optimisation.md)
-- [Architecture des systèmes d’information (Backend avec .NET Core)](./INFO_Architecture_des_SI)
+- [Architecture des systèmes d’information (Backend avec .NET Core)](./INFO_Architecture_des_SI/UniversiteBackEnd/UniversiteBackEnd.sln)
 - (Autres modules et TDs peuvent être ajoutés ici)
 
 Chaque module contient ses fichiers de cours, TDs, exercices pratiques, schémas et scripts associés.
