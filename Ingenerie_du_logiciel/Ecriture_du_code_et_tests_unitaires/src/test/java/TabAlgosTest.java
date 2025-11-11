@@ -43,6 +43,18 @@ public class TabAlgosTest {
         assertEquals(5, TabAlgos.plusGrand(tab));
     }
 
+    @Test
+    public void testPlusGrandValeursExtremes() {
+        int[] tab = {Integer.MIN_VALUE, -1, 0, Integer.MAX_VALUE};
+        assertEquals(Integer.MAX_VALUE, TabAlgos.plusGrand(tab));
+    }
+
+    @Test
+    public void testPlusGrandDeuxElements() {
+        int[] tab = {7, 3};
+        assertEquals(7, TabAlgos.plusGrand(tab));
+    }
+
     // ---- Tests pour moyenne ----
     @Test
     public void testMoyenneValeursPositives() {
@@ -71,6 +83,12 @@ public class TabAlgosTest {
     @Test
     public void testMoyenneExceptionNull() {
         assertThrows(IllegalArgumentException.class, () -> TabAlgos.moyenne(null));
+    }
+
+    @Test
+    public void testMoyenneUnElement() {
+        int[] tab = {5};
+        assertEquals(5.0, TabAlgos.moyenne(tab));
     }
 
     // ---- Tests pour egaux ----
@@ -114,4 +132,10 @@ public class TabAlgosTest {
         assertFalse(TabAlgos.egaux(new int[]{1, 2}, null));
         assertTrue(TabAlgos.egaux(null, null)); // deux null considérés comme égaux
     }
+
+    @Test
+    public void testEgauxDeuxTableauxVides() {
+        assertTrue(TabAlgos.egaux(new int[]{}, new int[]{}));
+    }
+
 }
