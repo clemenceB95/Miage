@@ -9,14 +9,43 @@
     <groupId>default</groupId>
     <artifactId>my-project</artifactId>
 
-    <dependencies><!-- dependendance du projet -->
-        <dependency><!-- bibliothèque junit -->
+
+    <!-- Toutes les dépendances JUnit 5 regroupées proprement -->
+    <dependencies>
+
+        <!-- API JUnit 5 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.13.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Paramètres JUnit 5 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.13.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Engine JUnit 5 -->
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.13.4</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Plugin JUnit 5 pour Pitest -->
+        <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-junit5-plugin</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
     </dependencies>
+
 
     <build>
         <plugins><!-- lister les plugins et leur version permet d'éviter que maven prenne celui qui trouvera par defaut -->
@@ -38,6 +67,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.4</version>
                 <configuration>
+                    <useModulePath>false</useModulePath>
                     <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
             </plugin>
@@ -76,6 +106,23 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.0.0</version>
+            </plugin>
+
+            <!-- Pitest -->
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.21.1</version>
+                <configuration>
+                    <targetClasses>
+                        <param>TabAlgos</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>TabAlgosTest</param>
+                    </targetTests>
+                    <mutationThreshold>0</mutationThreshold>
+                    <coverageThreshold>0</coverageThreshold>
+                </configuration>
             </plugin>
 
         </plugins>
