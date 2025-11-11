@@ -33,6 +33,16 @@ public class TabAlgosTest {
         assertThrows(IllegalArgumentException.class, () -> TabAlgos.plusGrand(null));
     }
 
+    /**
+     * Test ajouté pour tuer la mutation (changed conditional boundary)
+     * sur la condition val > max.
+     */
+    @Test
+    public void testPlusGrandAvecDoublons() {
+        int[] tab = {5, 5, 5, 3};
+        assertEquals(5, TabAlgos.plusGrand(tab));
+    }
+
     // ---- Tests pour moyenne ----
     @Test
     public void testMoyenneValeursPositives() {
